@@ -1,11 +1,29 @@
 <?php 
 
-include "../connect_mysql.php";
+if(!empty($_GET['id'])) {
 
-$sql = "SELECT * FROM users";
+    include "../connect_mysql.php";
 
-$result = $conn->query($sql);
+    $id = $_GET['id'];
 
+    $sqlSelect = "SELECT * FROM USERS WHERE id=$id";
+
+    $result = $conn->query($sqlSelect);
+
+    if($result->num_rows > 0) {
+
+        while($user_data = mysqli_fetch_assoc($result)){
+            $name = $user_data["name"];
+            $last_name = $user_data["last_name"];
+            $email = $user_data["email"];
+            $profile = $user_data["profile"];
+        }
+        //print_r($id);
+    } else {
+        header("Location: index.php");
+    }
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,10 +80,9 @@ $result = $conn->query($sql);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Usuários</span></a>
-            </li>
             </li>
 
             <!-- Divider -->
@@ -146,60 +163,53 @@ $result = $conn->query($sql);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Usuários</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Usuários > Novo Usuário</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row"> 
+                        <div class="col-md-12"> 
+                            <div class="card mb-4 py-3"> 
+                                <div class="card-body">
+                                    <form action="save-edit.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                        <!-- Form Row-->
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (first name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputFirstName">Nome</label>
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Digite o seu nome" value="<?php echo $name?>" name="name">
+                                            </div>
+                                            <!-- Form Group (last name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLastName">Sobrenome</label>
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="Digite o seu sobrenome" value="<?php echo $last_name?>" name="last_name">
+                                            </div>
+                                        </div>
+                                        <!-- Form Group (email address)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputEmailAddress">E-mail</label>
+                                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Digite o seu e-mail" value="<?php echo $email?>" name="email">
+                                        </div>
 
-                        <div class="col-md-12">
-                            <div class="card mb-4 ">
-                                <div class="card-body text-right">
-                                    <a href="add.php" class="btn btn-primary">Novo Usuário</a>
+                                        <!-- Form Group (Roles)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" >Perfil</label>
+                                            <select name="profile" class="form-control form-select col-md-6" aria-label="Default select example">
+                                                <option selected="" disabled="">Selecione:</option>
+                                                <option value="Administrator" <?php echo ($profile == 'Administrator') ? 'checked' : '' ?>>Administrator</option>
+                                                <option value="Manager" <?php echo ($profile == 'Manager') ? 'checked' : '' ?>>Manager</option>
+                                                <option value="Common" <?php echo ($profile ==  'Common') ? 'checked' : '' ?>>Common</option>
+                                            </select>
+                                        </div>
+                                        <!-- Submit button-->
+                                         <div class="d-flex justify-content-end">
+                                            <button class="btn btn-link" type="reset">Cancel</button>
+                                            <button class="btn btn-primary" type="submit" name="update" id="update">Save</button>
+                                         </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card mb-4 py-3">
-                                <div class="card-body "> 
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">E-mail</th>
-                                                <th scope="col">Profile</th>
-                                                <th scope="col">Created At</th>
-                                                <th scope="col">Modified At</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <?php 
-                                            while($user_data = mysqli_fetch_assoc($result)) {
-                                                echo "<tr>";
-                                                echo "<th>".$user_data['id']."</td>";
-                                                echo "<td>".$user_data['name']."</td>";
-                                                echo "<td>".$user_data['last_name']."</td>";
-                                                echo "<td>".$user_data['email']."</td>";
-                                                echo "<td>".$user_data['profile']."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['created_at']))."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['updated_at']))."</td>";
-                                                echo "<td>
-                                                <a href='./edit.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
-                                                <a href='./delete.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>
-                                                ";
-                                                echo "</tr>";
-                                            }
-                                             
-                                                ?>
-                                                
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
 
                     </div>
