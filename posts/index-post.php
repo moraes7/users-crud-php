@@ -2,7 +2,7 @@
 
 include "../connect_mysql.php";
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT posts.id, posts.title, posts.content, users.name as created_by, posts.created_at, posts.updated_at FROM posts JOIN users ON posts.created_by = users.id";
 
 $result = $conn->query($sql);
 
@@ -62,13 +62,13 @@ $result = $conn->query($sql);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="../users/index.php">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Usuários</span></a>
             </li>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="../posts/index-post.php">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Posts</span></a>
             </li>
@@ -152,7 +152,7 @@ $result = $conn->query($sql);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Usuários</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Posts</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -161,7 +161,7 @@ $result = $conn->query($sql);
                         <div class="col-md-12">
                             <div class="card mb-4 ">
                                 <div class="card-body text-right">
-                                    <a href="add.php" class="btn btn-primary">Novo Usuário</a>
+                                    <a href="add-post.php" class="btn btn-primary">Novo Post</a>
                                 </div>
                             </div>
                         </div>
@@ -171,13 +171,12 @@ $result = $conn->query($sql);
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">E-mail</th>
-                                                <th scope="col">Profile</th>
+                                               <!-- <th scope="col">ID</th>-->
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Content</th>
+                                                <th scope="col">Created By</th>
                                                 <th scope="col">Created At</th>
-                                                <th scope="col">Modified At</th>
+                                                <th scope="col">Updated At</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -186,20 +185,17 @@ $result = $conn->query($sql);
                                             <?php 
                                             while($user_data = mysqli_fetch_assoc($result)) {
                                                 echo "<tr>";
-                                                echo "<td>".$user_data['id']."</td>";
-                                                echo "<td>".$user_data['name']."</td>";
-                                                echo "<td>".$user_data['last_name']."</td>";
-                                                echo "<td>".$user_data['email']."</td>";
-                                                echo "<td>".$user_data['profile']."</td>";
+                                                echo "<td>".$user_data['title']."</td>";
+                                                echo "<td>".$user_data['content']."</td>";
+                                                echo "<td>".$user_data['created_by']."</td>";
                                                 echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['created_at']))."</td>";
                                                 echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['updated_at']))."</td>";
                                                 echo "<td>
-                                                <a href='./edit.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
-                                                <a href='./delete.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>
+                                                <a href='./edit-post.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
+                                                <a href='./delete-post.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>
                                                 ";
                                                 echo "</tr>";
                                             }
-                                             
                                                 ?>
                                                 
                                         </tbody>

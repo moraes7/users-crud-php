@@ -1,11 +1,31 @@
 <?php 
 
-include "../connect_mysql.php";
+if(!empty($_GET['id'])) {
 
-$sql = "SELECT * FROM users";
+    include "../connect_mysql.php";
 
-$result = $conn->query($sql);
+    $id = $_GET['id'];
 
+    $sqlSelect = "SELECT * FROM POSTS WHERE id=$id";
+
+    $result = $conn->query($sqlSelect);
+
+    if($result->num_rows > 0) {
+
+        while($user_data = mysqli_fetch_assoc($result)){
+            $title = $user_data["title"];
+            $content = $user_data["content"];
+            $created_by = $user_data["created_by"];
+        }
+        //print_r($id);
+    } else {
+        header("Location: index.php");
+    }
+
+    $sqlUsers = "SELECT id, name FROM USERS";
+    $usersResult = $conn->query($sqlUsers);
+    
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,16 +82,9 @@ $result = $conn->query($sql);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Usuários</span></a>
-            </li>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="../posts/index-post.php">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Posts</span></a>
-            </li>
             </li>
 
             <!-- Divider -->
@@ -152,60 +165,39 @@ $result = $conn->query($sql);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Usuários</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Posts > Editar Post</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="card mb-4 ">
-                                <div class="card-body text-right">
-                                    <a href="add.php" class="btn btn-primary">Novo Usuário</a>
+                    <div class="row"> 
+                        <div class="col-md-12"> 
+                            <div class="card mb-4 py-3"> 
+                                <div class="card-body">
+                                    <form action="save-edit-post.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                        <!-- Form Row-->
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (first name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputFirstName">Title</label>
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Digite o título do post" value="<?php echo $title?>" name="title">
+                                            </div>
+                                            <!-- Form Group (last name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLastName">Content</label>
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="Digite o conteúdo do post" value="<?php echo $content?>" name="content">
+                                            </div>
+                                        </div>
+                                        
+                                        </div>
+                                        <!-- Submit button-->
+                                         <div class="d-flex justify-content-end">
+                                            <button class="btn btn-link" type="reset">Cancel</button>
+                                            <button class="btn btn-primary" type="submit" name="update" id="update">Save</button>
+                                         </div>
+                                    </form>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card mb-4 py-3">
-                                <div class="card-body "> 
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">E-mail</th>
-                                                <th scope="col">Profile</th>
-                                                <th scope="col">Created At</th>
-                                                <th scope="col">Modified At</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <?php 
-                                            while($user_data = mysqli_fetch_assoc($result)) {
-                                                echo "<tr>";
-                                                echo "<td>".$user_data['id']."</td>";
-                                                echo "<td>".$user_data['name']."</td>";
-                                                echo "<td>".$user_data['last_name']."</td>";
-                                                echo "<td>".$user_data['email']."</td>";
-                                                echo "<td>".$user_data['profile']."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['created_at']))."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['updated_at']))."</td>";
-                                                echo "<td>
-                                                <a href='./edit.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
-                                                <a href='./delete.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>
-                                                ";
-                                                echo "</tr>";
-                                            }
-                                             
-                                                ?>
-                                                
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
 
                     </div>

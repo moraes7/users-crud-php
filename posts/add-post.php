@@ -2,11 +2,12 @@
 
 include "../connect_mysql.php";
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT id, name FROM users";
 
 $result = $conn->query($sql);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,16 +63,9 @@ $result = $conn->query($sql);
 
             <!-- Nav Item - Charts -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-user"></i>
                     <span>Usuários</span></a>
-            </li>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="../posts/index-post.php">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Posts</span></a>
-            </li>
             </li>
 
             <!-- Divider -->
@@ -152,60 +146,52 @@ $result = $conn->query($sql);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Usuários</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Posts > Novo Post</h1>
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <div class="card mb-4 ">
-                                <div class="card-body text-right">
-                                    <a href="add.php" class="btn btn-primary">Novo Usuário</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="card mb-4 py-3">
-                                <div class="card-body "> 
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">E-mail</th>
-                                                <th scope="col">Profile</th>
-                                                <th scope="col">Created At</th>
-                                                <th scope="col">Modified At</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <?php 
-                                            while($user_data = mysqli_fetch_assoc($result)) {
-                                                echo "<tr>";
-                                                echo "<td>".$user_data['id']."</td>";
-                                                echo "<td>".$user_data['name']."</td>";
-                                                echo "<td>".$user_data['last_name']."</td>";
-                                                echo "<td>".$user_data['email']."</td>";
-                                                echo "<td>".$user_data['profile']."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['created_at']))."</td>";
-                                                echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['updated_at']))."</td>";
-                                                echo "<td>
-                                                <a href='./edit.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
-                                                <a href='./delete.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>
-                                                ";
-                                                echo "</tr>";
-                                            }
-                                             
-                                                ?>
+                    <div class="row"> 
+                        <div class="col-md-12"> 
+                            <div class="card mb-4 py-3"> 
+                                <div class="card-body">
+                                    <form action="save-post.php" method="POST">
+                                        <!--<input type="hidden" name="action" value="register">-->
+                                        <!-- Form Row-->
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (first name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputFirstName">Title</label>
+                                                <input class="form-control" id="inputFirstName" type="text" placeholder="Digite o título do post" value="" name="title">
+                                            </div>
+                                            <!-- Form Group (last name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLastName">Content</label>
+                                                <input class="form-control" id="inputLastName" type="text" placeholder="Digite o conteúdo do post" value="" name="content">
+                                            </div>
+                                        </div>
+                                        <!-- Form Group (Roles)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" >Created By</label>
+                                            <select name="created_by" class="form-control form-select col-md-6" aria-label="Default select example">
+                                                <option selected="" disabled="">Select:</option>
+                                                <?php 
+                                                while($user_data = mysqli_fetch_assoc($result)) {
+                                                    echo "<option value='".$user_data['id']."'>". $user_data['name']."</option>";
+                                                }
+                                            
                                                 
-                                        </tbody>
-                                    </table>
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <!-- Submit button-->
+                                         <div class="d-flex justify-content-end">
+                                            <button class="btn btn-link" type="reset">Cancel</button>
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                         </div>
+
+                                    </form>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
 
                     </div>
