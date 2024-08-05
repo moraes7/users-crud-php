@@ -191,6 +191,10 @@ if(!empty($_GET['id'])) {
                                             <label class="small mb-1" for="inputEmailAddress">E-mail</label>
                                             <input class="form-control" id="inputEmailAddress" type="email" placeholder="Digite o seu e-mail" value="<?php echo $email?>" name="email">
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputPassword">Senha</label>
+                                            <input class="form-control" id="inputPassword" type="password" placeholder="Digite a sua senha" value="<?php echo $password?>" name="password">
+                                        </div>
 
                                         <!-- Form Group (Roles)-->
                                         <div class="mb-3">

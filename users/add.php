@@ -170,6 +170,10 @@ include "../connect_mysql.php";
                                             <label class="small mb-1" for="inputEmailAddress">E-mail</label>
                                             <input class="form-control" id="inputEmailAddress" type="email" placeholder="Digite o seu e-mail" value="" name="email">
                                         </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputEmailAddress">Senha</label>
+                                            <input class="form-control" id="inputEmailAddress" type="password" placeholder="Digite a sua senha" value="" name="password">
+                                        </div>
 
                                         <!-- Form Group (Roles)-->
                                         <div class="mb-3">

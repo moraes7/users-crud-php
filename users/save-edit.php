@@ -8,9 +8,10 @@ if(isset($_POST['update'])) {
     $name = $_POST["name"];
     $last_name = $_POST["last_name"];
     $email = $_POST["email"];
+    $password = $_POST["password"];
     $profile = $_POST["profile"];
 
-    $sqlUpdate = "UPDATE USERS SET name='$name', last_name='$last_name', email='$email', profile='$profile' WHERE id='$id'";
+    $sqlUpdate = "UPDATE USERS SET name='$name', last_name='$last_name', email='$email', password='$password', profile='$profile' WHERE id='$id'";
 
     $conn->query($sqlUpdate);
 
