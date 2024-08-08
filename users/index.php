@@ -162,6 +162,7 @@ $result = $conn->query($sql);
                             <div class="card mb-4 ">
                                 <div class="card-body text-right">
                                     <a href="add.php" class="btn btn-primary">Novo Usuário</a>
+                                    <a href="export.php" class="btn btn-primary">Exportar Usuários</a>
                                 </div>
                             </div>
                         </div>
