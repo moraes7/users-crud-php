@@ -150,7 +150,7 @@ include "../connect_mysql.php";
                         <div class="col-md-12"> 
                             <div class="card mb-4 py-3"> 
                                 <div class="card-body">
-                                    <form action="save-add.php" method="POST">
+                                    <form action="save-add.php" method="POST" enctype="multipart/form-data">
                                         <!--<input type="hidden" name="action" value="register">-->
                                         <!-- Form Row-->
                                         <div class="row gx-3 mb-3">
@@ -174,7 +174,7 @@ include "../connect_mysql.php";
                                             <label class="small mb-1" for="inputEmailAddress">Senha</label>
                                             <input class="form-control" id="inputEmailAddress" type="password" placeholder="Digite a sua senha" value="" name="password">
                                         </div>
-
+                                        
                                         <!-- Form Group (Roles)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" >Perfil</label>
@@ -184,6 +184,10 @@ include "../connect_mysql.php";
                                                 <option value="Manager">Manager</option>
                                                 <option value="Common">Common</option>
                                             </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputImage">Foto de perfil:</label>
+                                            <input style="border: none;" class="form-control" id="inputImage" type="file" placeholder="" value="" name="image">
                                         </div>
                                         <!-- Submit button-->
                                          <div class="d-flex justify-content-end">

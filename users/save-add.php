@@ -14,8 +14,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
     $profile = $_POST["profile"];
+    
+    if(isset($_FILES["image"]) && !empty($_FILES["image"])) {
+        $image = "../photos/".$_FILES["image"]["name"];
+        move_uploaded_file($_FILES["image"]["tmp_name"], $image);
+    } else {
+        $image = "";
+    }
 
-    $sql = "INSERT INTO USERS (name, last_name, email, password, profile, created_at, updated_at) VALUES ('$name', '$last_name', '$email', '$password', '$profile', current_timestamp(), current_timestamp())";
+    $sql = "INSERT INTO USERS (name, last_name, email, password, profile, created_at, updated_at, image) VALUES ('$name', '$last_name', '$email', '$password', '$profile', current_timestamp(), current_timestamp(), '$image')";
 
     if($conn->query($sql) === TRUE) {
         $mail = new PHPMailer(true);

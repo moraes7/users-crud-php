@@ -179,6 +179,7 @@ $result = $conn->query($sql);
                                                 <th scope="col">Profile</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Modified At</th>
+                                                <th scope="col">Photo</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -194,6 +195,7 @@ $result = $conn->query($sql);
                                                 echo "<td>".$user_data['profile']."</td>";
                                                 echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['created_at']))."</td>";
                                                 echo "<td>".date('d/m/Y H:i:s', strtotime($user_data['updated_at']))."</td>";
+                                                echo "<td><img src='".$user_data['image']."'alt='Imagem do usuário' style='width: 50px; height: 50px; object-fit: cover; border-radius: 5px;' ></td>";
                                                 echo "<td>
                                                 <a href='./edit.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Edit</button></a>
                                                 <a href='./delete.php?id=".$user_data['id']."'><button class='btn btn-secondary'>Remove</button></a>

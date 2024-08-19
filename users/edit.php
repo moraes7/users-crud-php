@@ -16,6 +16,7 @@ if(!empty($_GET['id'])) {
             $name = $user_data["name"];
             $last_name = $user_data["last_name"];
             $email = $user_data["email"];
+            $password = $user_data["password"];
             $profile = $user_data["profile"];
         }
         //print_r($id);
@@ -206,6 +207,7 @@ if(!empty($_GET['id'])) {
                                                 <option value="Common" <?php echo ($profile ==  'Common') ? 'checked' : '' ?>>Common</option>
                                             </select>
                                         </div>
+                                        
                                         <!-- Submit button-->
                                          <div class="d-flex justify-content-end">
                                             <button class="btn btn-link" type="reset">Cancel</button>
