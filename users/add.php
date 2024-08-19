@@ -185,10 +185,13 @@ include "../connect_mysql.php";
                                                 <option value="Common">Common</option>
                                             </select>
                                         </div>
+
+                                        <!-- Form Group (Image)-->
                                         <div class="mb-3">
                                             <label class="small mb-1" for="inputImage">Foto de perfil:</label>
                                             <input style="border: none;" class="form-control" id="inputImage" type="file" placeholder="" value="" name="image">
                                         </div>
+                                        
                                         <!-- Submit button-->
                                          <div class="d-flex justify-content-end">
                                             <button class="btn btn-link" type="reset">Cancel</button>

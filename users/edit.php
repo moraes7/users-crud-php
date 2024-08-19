@@ -18,6 +18,7 @@ if(!empty($_GET['id'])) {
             $email = $user_data["email"];
             $password = $user_data["password"];
             $profile = $user_data["profile"];
+            $image = $user_data["image"];
         }
         //print_r($id);
     } else {
@@ -172,7 +173,7 @@ if(!empty($_GET['id'])) {
                         <div class="col-md-12"> 
                             <div class="card mb-4 py-3"> 
                                 <div class="card-body">
-                                    <form action="save-edit.php" method="POST">
+                                    <form action="save-edit.php" method="POST" enctype="multipart/form-data">
                                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                                         <!-- Form Row-->
                                         <div class="row gx-3 mb-3">
@@ -206,6 +207,16 @@ if(!empty($_GET['id'])) {
                                                 <option value="Manager" <?php echo ($profile == 'Manager') ? 'checked' : '' ?>>Manager</option>
                                                 <option value="Common" <?php echo ($profile ==  'Common') ? 'checked' : '' ?>>Common</option>
                                             </select>
+                                        </div>
+
+                                        <!-- Form Group (Image)-->
+                                        <div class="mb-3">
+                                            <label class="small mb-1" for="inputImage">Foto de perfil:</label>
+                                            <?php if(!empty($image)) { ?>
+                                                <img src="<?php echo $image;?>" alt="Imagem do usuário" style='width: 50px; height: 50px; object-fit: cover; border-radius: 5px;'>
+                                            <?php } ?>
+                                            <input style="border: none;" class="form-control" id="inputImage" type="file" placeholder="" value="" name="image">
+                                            <input type="hidden" name="previous_image" value="<?php echo $image?>">
                                         </div>
                                         
                                         <!-- Submit button-->
