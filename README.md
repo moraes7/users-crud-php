@@ -28,7 +28,3 @@ Este projeto foi criado com o objetivo de praticar e demonstrar um CRUD completo
 - `/pages` — Páginas HTML/PHP (listar, editar, adicionar)
 - `/includes` — Arquivos de conexão e funções auxiliares
 - `/database.sql` — Script SQL do banco de dados
-  
----
-
-Feito por [moraes7](https://github.com/moraes7)
